@@ -1,0 +1,16 @@
+<h2>Channels</h2>
+<ul>
+  <% for (const name in channels) { %>
+    <li><a href="/channel/<%- encodeURIComponent(name) %>/"><%= name %></a>: <%- channels[name] %></li>
+  <% } %>
+</ul>
+
+<h2>Account</h2>
+<p><a href="/create-channel">Create channel</a></p>
+<button onclick="logout()">Log out</button>
+<script>
+function logout () {
+  document.cookie = window.SMALLTALK_ENV.TOKEN_COOKIE_NAME + '=; Max-Age=0'
+  location = '/log-in'
+}
+</script>

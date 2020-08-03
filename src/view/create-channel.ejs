@@ -1,0 +1,6 @@
+<% if (error === 'duplicate') { %><div class="error">Error: There is already a channel with this name. Try a different name or <a href="/">go back</a>.</div><% } %>
+<form method="POST" action="">
+  <p>Name: <input name="name" required></p>
+  <p>Description: <input name="description" required></p>
+  <button type="submit">Create</button>
+</form>

@@ -1,0 +1,16 @@
+<% if (error === 'badCredentials') { %><div class="error">Error: bad credentials. Try again.</div><% } %>
+<form action="" method="POST" onsubmit="save()">
+  <p>Username: <input id="username" required name="username" autocomplete="username"></p>
+  <p>Password: <input id="password" required name="password" type="password" autocomplete="current-password"></p>
+  <button type="submit">Log in</button>
+</form>
+<p>Not signed up? Click <a name="Sign Up" href="/sign-up">here</a> to sign up.</p>
+<script>
+function save () {
+  localStorage.smalltalkUsername = document.getElementById('username').value
+  localStorage.smalltalkPassword = document.getElementById('password').value
+  return true
+}
+if (localStorage.smalltalkUsername) document.getElementById('username').value = localStorage.smalltalkUsername
+if (localStorage.smalltalkPassword) document.getElementById('password').value = localStorage.smalltalkPassword
+</script>

@@ -1,0 +1,37 @@
+BEGIN;
+
+CREATE TABLE version (version INTEGER PRIMARY KEY NOT NULL);
+INSERT INTO version (version) VALUES (1);
+
+CREATE TABLE users (username TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);
+INSERT INTO users (username, email, password) VALUES ('smallbot', 'smallbot@example.com', '');
+CREATE TABLE channels (
+  name TEXT NOT NULL PRIMARY KEY,
+  description TEXT,
+  admin TEXT REFERENCES users (username) ON UPDATE CASCADE ON DELETE SET NULL
+);
+CREATE TABLE ignores (
+  username TEXT NOT NULL REFERENCES users (username) ON UPDATE CASCADE ON DELETE CASCADE,
+  channel TEXT NOT NULL REFERENCES channels (name) ON UPDATE CASCADE ON DELETE CASCADE,
+  UNIQUE (username, channel) ON CONFLICT IGNORE
+);
+CREATE TABLE messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  channel TEXT NOT NULL REFERENCES channels (name) ON UPDATE CASCADE ON DELETE CASCADE,
+  username TEXT NOT NULL REFERENCES users (username) ON UPDATE CASCADE ON DELETE NO ACTION,
+  time INTEGER NOT NULL,
+  message TEXT,
+  star_count INTEGER DEFAULT 0
+);
+CREATE INDEX idx_messages_1 ON messages (channel, time DESC);
+CREATE TABLE stars (
+  message_id INTEGER NOT NULL REFERENCES messages (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  username TEXT NOT NULL REFERENCES users (username) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE sessions (
+  token TEXT NOT NULL PRIMARY KEY,
+  username TEXT NOT NULL REFERENCES users (username) ON UPDATE CASCADE ON DELETE CASCADE,
+  expiry INTEGER NOT NULL
+);
+
+COMMIT;

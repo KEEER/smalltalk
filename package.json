@@ -1,0 +1,27 @@
+{
+  "name": "smalltalk",
+  "private": "true",
+  "version": "0.0.1",
+  "description": "A small talk program for web application security practice",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node .",
+    "postinstall": "node -e \"require('fs').copyFile('sample.env', '.env', err => err ? (require('consola').error(err), process.exit(1)) : require('consola').ready({ message: 'ready to start the server with \\`npm start\\`!', badge: true }))\""
+  },
+  "keywords": [],
+  "author": "Alan-Liang",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "@koa/router": "9.3.1",
+    "consola": "2.14.0",
+    "dotenv": "8.2.0",
+    "emittery": "0.7.1",
+    "koa": "2.13.0",
+    "koa-body": "4.2.0",
+    "koa-ejs": "4.3.0",
+    "lodash": "4.17.19",
+    "sqlite-async": "1.1.0",
+    "sqlite3": "5.0.0",
+    "uuid": "8.2.0"
+  }
+}

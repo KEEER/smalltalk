@@ -1,0 +1,7 @@
+<%= typeof title === 'undefined' ? {
+  '/': 'Home',
+  '/log-in': 'Log in',
+  '/sign-up': 'Sign up',
+  '/create-channel': 'Create Channel',
+  '/password': 'Set password',
+}[ctx.path] || 'Unknown page' : title %>

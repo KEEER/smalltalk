@@ -1,0 +1,39 @@
+<form action="" method="POST" onsubmit="save(event)">
+  <p>Username: <input id="username" required name="username" autocomplete="username"></p>
+  <p>Email: <input id="email" required type="email" name="email" autocomplete="email"></p>
+  <p><button onclick="sendCode(event)">Send verification code</button></p>
+  <p>Verification code: <input id="code" required autocomplete="off"></p>
+  <p class="error">Warning: Do <strong>NOT</strong> use a password you've used everywhere! This system is designed to have a lot of security issues and your password could be easily compromised!</p>
+  <p>Password: <input id="password" required name="password" type="password" autocomplete="new-password"></p>
+  <button type="submit">Sign up</button>
+</form>
+<p>Already signed up? Click <a name="Sign Up" href="/log-in">here</a> to log in.</p>
+<script>
+function save (e) {
+  if (!window.code || document.getElementById('code').value !== window.code) {
+    alert('Wrong verification code!')
+    e.preventDefault()
+    return false
+  }
+  localStorage.smalltalkUsername = document.getElementById('username').value
+  localStorage.smalltalkPassword = document.getElementById('password').value
+  return true
+}
+function sendCode (e) {
+  e.preventDefault()
+  if (!document.getElementById('email').validity.valid) {
+    alert('Please specify a valid email address.')
+    return
+  }
+  fetch('/send-code', { method: 'post', body: JSON.stringify({ email: document.getElementById('email').value }) })
+    .then(function (res) {
+      if (res.status !== 200) throw new Error(res.status)
+      return res.text()
+    }).then(function (code) {
+      alert('Code sent.')
+      window.code = code
+    }).catch(function () { alert('Code not sent due to an error. Please retry.') })
+}
+if (localStorage.smalltalkUsername) document.getElementById('username').value = localStorage.smalltalkUsername
+if (localStorage.smalltalkPassword) document.getElementById('password').value = localStorage.smalltalkPassword
+</script>

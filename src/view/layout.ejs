@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%- include('_partial/title') %> | smalltalk</title>
+  <style>
+    body { color: #222; }
+    .error { color: red; }
+    .message-content { overflow: auto; }
+    .message-header { color: #888; font-size: 0.875rem;  }
+    .message-image { max-width: 80%; max-height: 50vh; }
+  </style>
+</head>
+<body>
+  <%- ctx.path === '/' ? '' : '<a href="/">Back to home</a>' %>
+  <h1><%- include('_partial/title') %></h1>
+  <%- body %>
+  <script>
+    window.SMALLTALK_ENV = JSON.parse('<%- JSON.stringify(process.env).replace(/\\/g, '\\\\').replace(/'/g, '\\\'') %>')
+  </script>
+</body>
+</html>
